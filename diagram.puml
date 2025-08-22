@@ -1,73 +1,95 @@
 @startuml
+skinparam classAttributeIconSize 0
 
+' Interfaces
+interface ICloneable {
+    + Clone() : object
+}
+
+interface IComparable_Question {
+    + CompareTo(other: Question) : int
+}
+
+interface IComparable_Exam {
+    + CompareTo(other: Exam) : int
+}
+
+' Classes
 class Answer {
-  - AnswerId : int
-  - AnswerText : string
-  + ToString() : string
-  + Clone() : object
+    - AnswerId : int
+    - AnswerText : string
+    + ToString() : string
+    + Clone() : object
 }
 
 abstract class Question {
-  - Header : string
-  - Body   : string
-  - Mark   : int
-  - AnswerList : Answer[]
-  + DisplayQuestion() : void
-  + ToString() : string
-  + Clone() : object
-  + CompareTo() : int
+    - Header : string
+    - Body : string
+    - Mark : int
+    - AnswerList : Answer[]
+    + DisplayQuestion() : void
+    + ToString() : string
+    + CompareTo(q:Question) : int
 }
 
 class MCQQuestion {
-  + DisplayQuestion() : void
+    + DisplayQuestion() : void
 }
 
 class TFQuestion {
-  + DisplayQuestion() : void
+    + DisplayQuestion() : void
 }
 
 abstract class Exam {
-  - Time : int
-  - Number : int
-  - Questions : Question[]
-  - UserAnswers : Answer[]
-  + TypeOfExam() : void
-  + CreateQuestions() : void
-  + ShowExam() : void
-  + ToString() : string
-  + Clone() : object
-  + CompareTo() : int
+    - options : string[,]
+    - Questions : Question[]
+    - UserAnswers : Answer[]
+    - Time : int
+    - Number : int
+    + TypeOfExam() : void
+    + CreateQuestions(start:int,end:int) : void
+    + ShowExam() : void
+    + ToString() : string
+    + CompareTo(exam:Exam) : int
 }
 
 class PracticalExam {
-  - TotalGrade : int
-  - UserGrade  : int
-  + CreateQuestions() : void
-  + ShowExam() : void
+    - totalGrade : int
+    - userGrade : int
+    + CreateQuestions(start:int,end:int) : void
+    + TypeOfExam() : void
+    + ShowExam() : void
+    + DisplayAnswer() : void
 }
 
 class FinalExam {
-  + CreateQuestions() : void
-  + ShowExam() : void
+    + CreateQuestions(start:int,end:int) : void
+    + TypeOfExam() : void
+    + DisplayAnswer() : void
+    + ShowExam() : void
 }
 
 class Subject {
-  - SubjectId : int
-  - SubjectName : string
-  - Exam : Exam
-  + CreateExam() : void
-  + ToString() : string
+    - SubjectId : int
+    - SubjectName : string
+    - Exam : Exam
+    + CreateExam() : void
+    + ToString() : string
 }
 
-class Program {
-  + Main() : void
-}
+' Relationships
+Answer ..|> ICloneable
+Question ..|> IComparable_Question
+Exam ..|> IComparable_Exam
 
-Question <|-- MCQQuestion
-Question <|-- TFQuestion
-Exam <|-- PracticalExam
-Exam <|-- FinalExam
+MCQQuestion --|> Question
+TFQuestion --|> Question
+
+PracticalExam --|> Exam
+FinalExam --|> PracticalExam
+
 Subject --> Exam
-Question --> Answer
+Exam o-- Question
+Question o-- Answer
 
 @enduml
