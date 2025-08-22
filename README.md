@@ -42,38 +42,6 @@ It simulates the process of creating an exam, taking it, and calculating grades.
 
 ---
 
-## 📊 UML Class Diagram
-
-You can generate the **Class Diagram** using **PlantUML**.
-
-### Steps:
-1. Copy the `diagram.puml` file (included in the repo).
-2. Go to [PlantText](https://www.planttext.com/) or use **VSCode + PlantUML extension**.
-3. Paste the code and click **Generate**.
-4. You’ll get the full UML diagram for the system.
-
-Example UML snippet:
-```plantuml
-@startuml
-class Answer {
-  - AnswerId : int
-  - AnswerText : string
-  + ToString() : string
-  + Clone() : object
-}
-abstract class Question {
-  - Header : string
-  - Body   : string
-  - Mark   : int
-  - AnswerList : Answer[]
-  + DisplayQuestion() : void
-  + ToString() : string
-}
-Question <|-- MCQQuestion
-Question <|-- TFQuestion
-Exam <|-- PracticalExam
-Exam <|-- FinalExam
-Subject --> Exam
 Question --> Answer
 @enduml
 
