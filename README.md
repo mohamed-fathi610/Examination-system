@@ -42,6 +42,4 @@ It simulates the process of creating an exam, taking it, and calculating grades.
 
 ---
 
-Question --> Answer
-@enduml
 
