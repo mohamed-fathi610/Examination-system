@@ -1,0 +1,73 @@
+@startuml
+
+class Answer {
+  - AnswerId : int
+  - AnswerText : string
+  + ToString() : string
+  + Clone() : object
+}
+
+abstract class Question {
+  - Header : string
+  - Body   : string
+  - Mark   : int
+  - AnswerList : Answer[]
+  + DisplayQuestion() : void
+  + ToString() : string
+  + Clone() : object
+  + CompareTo() : int
+}
+
+class MCQQuestion {
+  + DisplayQuestion() : void
+}
+
+class TFQuestion {
+  + DisplayQuestion() : void
+}
+
+abstract class Exam {
+  - Time : int
+  - Number : int
+  - Questions : Question[]
+  - UserAnswers : Answer[]
+  + TypeOfExam() : void
+  + CreateQuestions() : void
+  + ShowExam() : void
+  + ToString() : string
+  + Clone() : object
+  + CompareTo() : int
+}
+
+class PracticalExam {
+  - TotalGrade : int
+  - UserGrade  : int
+  + CreateQuestions() : void
+  + ShowExam() : void
+}
+
+class FinalExam {
+  + CreateQuestions() : void
+  + ShowExam() : void
+}
+
+class Subject {
+  - SubjectId : int
+  - SubjectName : string
+  - Exam : Exam
+  + CreateExam() : void
+  + ToString() : string
+}
+
+class Program {
+  + Main() : void
+}
+
+Question <|-- MCQQuestion
+Question <|-- TFQuestion
+Exam <|-- PracticalExam
+Exam <|-- FinalExam
+Subject --> Exam
+Question --> Answer
+
+@enduml
